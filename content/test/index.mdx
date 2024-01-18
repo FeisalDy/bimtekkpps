@@ -11,76 +11,12 @@ tags:
   - programming
 ---
 
-# Welcome
+Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task that required a keen eye for typography and a lot of complex custom CSS.
 
-This is a **live demo** of MDXEditor with all default features on.
+By default, Tailwind removes all of the default browser styling from paragraphs, headings, lists and more. This ends up being really useful for building application UIs because you spend less time undoing user-agent styles, but when you *really are* just trying to style some content that came from a rich-text editor in a CMS or a markdown file, it can be surprising and unintuitive.
 
-> The overriding design goal for Markdown’s formatting syntax is to make it as readable as possible.
-> The idea is that a Markdown-formatted document should be publishable as-is, as plain text,
-> without looking like it’s been marked up with tags or formatting instructions.
+<img height="605" width="454" src="/blogs/1705582517552me.jpg" />														&#x9;
 
-[— Daring Fireball](https://daringfireball.net/projects/markdown/).
+We get lots of complaints about it actually, with people regularly asking us things like:
 
-In here, you can find the following markdown elements:
-
-* Headings
-* Lists
-  * Unordered
-  * Ordered
-  * Check lists
-  * And nested ;)
-* Links
-* Bold/Italic/Underline formatting
-* Tables
-* Code block editors
-* And much more.
-
-The current editor content is styled using the `@tailwindcss/typography` [plugin](https://tailwindcss.com/docs/typography-plugin).
-
-## What can you do here?
-
-This is a great location for you to test how editing markdown feels. If you have an existing markdown source, you can switch to source mode using the toggle group in the top right, paste it in there, and go back to rich text mode.
-
-If you need a few ideas, here's what you can try:
-
-1. Add your own code sample
-2. Change the type of the headings
-3. Insert a table, add a few rows and columns
-4. Switch back to source markdown to see what you're going to get as an output
-5. Test the diff feature to see how the markdown has changed
-6. Add a frontmatter block through the toolbar button
-
-## A code sample
-
-MDXEditor embeds CodeMirror for code editing.
-
-```tsx
-export default function App() {
-  return (<div>Hello world</div>)
-}
-```
-
-## A live code example
-
-The block below is a live React component. You can configure multiple live code presets that specify the available npm packages and the default imports. You can also specify a default component that will be rendered in the live code block.
-
-```jsx live
-export default function App() {
-  return (<div>
-  <p>This is a live React component, that's being previewed in codesandbox. </p>
-  <p>Editing it will update the fenced codeblock in the markdown.</p>
-  </div>)
-}
-```
-
-## A table
-
-Play with the table below - add rows, columns, change column alignment. When editing,
-you can navigate the cells with `enter`, `shift+enter`, `tab` and `shift+tab`.
-
-| Item              | In Stock | Price |
-| :---------------- | :------: | ----: |
-| Python Hat        |   True   | 23.99 |
-| SQL Hat           |   True   | 23.99 |
-| Codecademy Tee    |   False  | 19.99 |
-| Codecademy Hoodie |   False  | 42.99 |
+> Why is Tailwind removing the default styles on my `h1` elements? How do I disable this? What do you mean I lose all the other base styles too? We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a `p` element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look *awesome*, not awful.

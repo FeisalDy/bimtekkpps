@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+import AutoMdxInputForm from '@/src/components/Input/AutoMdxInputForm'
 
 const EditorComp = dynamic(() => import('./EditorComponent'), { ssr: false })
 
@@ -9,29 +10,17 @@ Hello **world**!
 `
 
 export default function Home () {
+  const handleMdxSubmit = mdxData => {
+    // Handle the submitted MDX data, e.g., send it to an API or process it.
+    console.log('Submitted MDX Data:', mdxData)
+  }
+
   return (
-    <>
-      <p>
-        This is a bare-bones unstyled MDX editor without any plugins and no
-        toolbar. Check the EditorComponent.tsx file for the code.
-      </p>
-      <p>
-        To enable more features, add the respective plugins to your instance -
-        see{' '}
-        <a
-          className='text-blue-600'
-          href='https://mdxeditor.dev/editor/docs/getting-started'
-        >
-          the docs
-        </a>{' '}
-        for more details.
-      </p>
-      <br />
-      <div style={{ border: '1px solid black' }}>
-        <Suspense fallback={null}>
-          <EditorComp markdown={markdown} />
-        </Suspense>
-      </div>
-    </>
+    <div className='mx-auto max-w-screen-2xl '>
+      <AutoMdxInputForm />
+      <Suspense fallback={null}>
+        <EditorComp markdown={markdown} />
+      </Suspense>
+    </div>
   )
 }
