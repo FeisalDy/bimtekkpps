@@ -4,7 +4,6 @@ import { writeFile } from 'fs/promises'
 
 export const POST = async req => {
   const formData = await req.formData()
-  console.log(formData)
 
   const file = formData.get('file')
   if (!file) {

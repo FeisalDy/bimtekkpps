@@ -7,7 +7,6 @@ import AutoMdxInputForm from '@/src/components/Input/AutoMdxInputForm'
 const EditorComp = dynamic(() => import('./EditorComponent'), { ssr: false })
 
 const markdown = `
-Hello **world**!
 `
 
 export default function Home () {

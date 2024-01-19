@@ -7,7 +7,8 @@ import {
   LinkedinIcon,
   MoonIcon,
   SunIcon,
-  TwitterIcon
+  TwitterIcon,
+  InstagramIcon
 } from '../Icons'
 import siteMetadata from '@/src/utils/siteMetaData'
 import { useThemeSwitch } from '../Hooks/useThemeSwitch'
@@ -73,8 +74,8 @@ const Header = () => {
         <Link href='/' className='mr-2'>
           Home
         </Link>
-        <Link href='/about' className='mx-2'>
-          About
+        <Link href='/materi' className='mx-2'>
+          Materi
         </Link>
         <Link href='/contact' className='mx-2'>
           Contact
@@ -95,12 +96,12 @@ const Header = () => {
         </button>
       </nav>
 
-      <nav className='fixed z-50 items-center hidden px-8 py-3 font-medium capitalize translate-x-1/2 border border-solid rounded-full w-max border-dark sm:flex top-6 right-1/2 bg-light/80 backdrop-blur-sm'>
+      <nav className='items-center hidden px-8 py-3 font-medium capitalize border border-solid rounded-full w-max border-dark sm:flex top-6 bg-light/80 backdrop-blur-sm'>
         <Link href='/' className='mr-2'>
           Home
         </Link>
-        <Link href='/about' className='mx-2'>
-          About
+        <Link href='/materi' className='mx-2'>
+          Materi
         </Link>
         <Link href='/contact' className='mx-2'>
           Contact
@@ -122,12 +123,12 @@ const Header = () => {
       </nav>
       <div className='items-center hidden sm:flex'>
         <a
-          href={siteMetadata.linkedin}
+          href={siteMetadata.instagram}
           className='inline-block w-6 h-6 mr-4'
-          aria-label='Reach out to me via LinkedIn'
+          aria-label='Reach out to me via instagram'
           target='_blank'
         >
-          <LinkedinIcon className='transition-all duration-200 hover:scale-125 ease' />
+          <InstagramIcon className='transition-all duration-200 hover:scale-125 ease' />
         </a>
         <a
           href={siteMetadata.twitter}
