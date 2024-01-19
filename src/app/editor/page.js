@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
@@ -17,7 +18,7 @@ export default function Home () {
 
   return (
     <div className='mx-auto max-w-screen-2xl '>
-      <AutoMdxInputForm />
+      {/* <AutoMdxInputForm /> */}
       <Suspense fallback={null}>
         <EditorComp markdown={markdown} />
       </Suspense>
