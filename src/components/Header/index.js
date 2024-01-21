@@ -77,7 +77,7 @@ const Header = () => {
         <Link href='/materi' className='mx-2'>
           Materi
         </Link>
-        <Link href='/contact' className='mx-2'>
+        <Link href='#' className='mx-2'>
           Contact
         </Link>
         <button
@@ -103,7 +103,7 @@ const Header = () => {
         <Link href='/materi' className='mx-2'>
           Materi
         </Link>
-        <Link href='/contact' className='mx-2'>
+        <Link href='#' className='mx-2'>
           Contact
         </Link>
         <button

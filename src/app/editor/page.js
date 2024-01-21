@@ -11,13 +11,11 @@ const markdown = `
 
 export default function Home () {
   const handleMdxSubmit = mdxData => {
-    // Handle the submitted MDX data, e.g., send it to an API or process it.
     console.log('Submitted MDX Data:', mdxData)
   }
 
   return (
-    <div className='mx-auto max-w-screen-2xl '>
-      {/* <AutoMdxInputForm /> */}
+    <div className='px-4 mx-auto md:px-12 '>
       <Suspense fallback={null}>
         <EditorComp markdown={markdown} />
       </Suspense>
