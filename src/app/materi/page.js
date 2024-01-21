@@ -4,15 +4,7 @@ import { allBlogs } from 'contentlayer/generated'
 import Link from 'next/link'
 import Axios from '@/src/utils/axios'
 
-// async function getPptx () {
-//   const res = await Axios.get('/pptx')
-
-//   return res.data
-// }
-
 export default function Materi () {
-  //   const pptx = await getPptx()
-
   const [blogs, setBlogs] = useState(allBlogs)
   const [pptx, setPptx] = useState([])
 
