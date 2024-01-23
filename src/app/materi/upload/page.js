@@ -4,16 +4,23 @@ import React, { useState } from 'react'
 const PptxUploader = () => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
+  const [type, setType] = useState('')
   const [download, setDownload] = useState('')
 
   const handleUpload = async () => {
+    console.log('Type state:', type)
     try {
       const response = await fetch('/api/pptx/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title: title, url: url, download: download })
+        body: JSON.stringify({
+          title: title,
+          url: url,
+          download: download,
+          type: type
+        })
       })
 
       if (response.status === 200) {
@@ -34,7 +41,7 @@ const PptxUploader = () => {
           name='title'
           id='title'
           class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-600 peer'
-          placeholder=' '
+          placeholder=''
           required
           value={title}
           onChange={e => setTitle(e.target.value)}
@@ -80,6 +87,24 @@ const PptxUploader = () => {
           class='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
         >
           Link Download
+        </label>
+      </div>
+      <div class='relative z-0 w-full mb-5 group'>
+        <input
+          type='text'
+          name='type'
+          id='type'
+          class='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-600 peer'
+          placeholder=' '
+          required
+          value={type}
+          onChange={e => setType(e.target.value)}
+        />
+        <label
+          for='type'
+          class='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-purple-600 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+        >
+          Type
         </label>
       </div>
       <button

@@ -77,8 +77,8 @@ const Header = () => {
         <Link href='/materi' className='mx-2'>
           Materi
         </Link>
-        <Link href='#' className='mx-2'>
-          Contact
+        <Link href='/aturan' className='mx-2'>
+          Aturan
         </Link>
         <button
           onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
@@ -103,8 +103,8 @@ const Header = () => {
         <Link href='/materi' className='mx-2'>
           Materi
         </Link>
-        <Link href='#' className='mx-2'>
-          Contact
+        <Link href='/aturan' className='mx-2'>
+          Aturan
         </Link>
         <button
           onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}

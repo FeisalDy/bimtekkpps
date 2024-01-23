@@ -15,6 +15,10 @@ const PptxSchema = new Schema(
     download: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: ''
     }
   },
   { timestamps: true }

@@ -3,14 +3,15 @@ import { NextResponse } from 'next/server'
 import Pptx from '@/src/models/Pptx'
 
 export const POST = async request => {
-  const { title, url, download } = await request.json()
+  const { title, url, download, type } = await request.json()
 
   await connect()
 
   const newPptx = new Pptx({
     title,
     url,
-    download
+    download,
+    type
   })
 
   try {

@@ -1,21 +1,21 @@
 // please update required information
 const siteMetadata = {
-  title: 'Next.js Blog With Tailwind CSS and Contentlayer',
-  author: 'CodeBucks',
+  title: 'PPK Seyegan',
+  author: 'PPKSeyegan',
   headerTitle: 'Next.js Blog',
-  description: 'A blog created with Next.js, Tailwind.css and contentlayer.',
+  description: 'A blog for KPPS',
   language: 'en-us',
-  theme: 'system', // system, dark or light
-  siteUrl: 'https://create-blog-with-nextjs.vercel.app', // your website URL
+  theme: 'system',
+  siteUrl: 'https://ppkseyegan.tech',
   siteLogo: '/logo.png',
-  socialBanner: '/social-banner.png', // add social banner in the public folder
-  email: 'codebucks27@gmail.com',
-  github: 'https://github.com/codebucks27',
-  twitter: 'https://twitter.com/code_bucks',
+  socialBanner: '/social-banner.png',
+  email: 'ppkseyegan2020@gmail.com',
+  github: '',
+  twitter: '',
   facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com/codebucks',
-  linkedin: 'https://www.linkedin.com/in/codebucks/',
-  dribbble: 'https://www.dribbble.com',
+  youtube: '',
+  linkedin: '',
+  dribbble: '',
   locale: 'en-US',
   instagram: 'https://www.instagram.com/ppk_seyegan'
 }
