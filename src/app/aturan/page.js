@@ -1,7 +1,5 @@
-'use client'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import Axios from '@/src/utils/axios'
 
 export default function Materi () {
   const aturan = [
