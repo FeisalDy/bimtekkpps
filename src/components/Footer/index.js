@@ -21,7 +21,7 @@ const Footer = () => {
   console.log(errors)
 
   return (
-    <footer className='flex flex-col items-center m-2 rounded-2xl bg-dark dark:bg-accentDark/90 sm:m-10 text-light dark:text-dark'>
+    <footer className='flex flex-col items-center m-2 mt-8 rounded-2xl bg-dark dark:bg-accentDark/90 sm:m-10 text-light dark:text-dark'>
       <div className='relative flex flex-col items-center justify-between w-full px-8 py-6 font-medium border-light md:flex-row'>
         <span className='hidden text-center md:flex'>&copy;2023</span>
         <div className='flex items-center'>
