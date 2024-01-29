@@ -1,11 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { allBlogs } from 'contentlayer/generated'
 import Link from 'next/link'
 import Axios from '@/src/utils/axios'
 
 export default function Materi () {
-  const [blogs, setBlogs] = useState(allBlogs)
   const [pptx, setPptx] = useState([])
   const [pdf, setPdf] = useState([])
 
@@ -17,7 +15,9 @@ export default function Materi () {
       const pdfItems = allPptx.filter(item => item.type === 'pdf')
       const nonPdfItems = allPptx.filter(item => item.type === 'pptx')
 
-      //   setPptx(res.data)
+      nonPdfItems.sort((a, b) => a.title.localeCompare(b.title))
+      pdfItems.sort((a, b) => a.title.localeCompare(b.title))
+
       setPptx(nonPdfItems)
       setPdf(pdfItems)
     } catch (error) {
@@ -33,7 +33,7 @@ export default function Materi () {
     <section className='w-full px-5 mt-2 sm:px-10 md:px-24 sxl:px-32'>
       <div className='gap-4 md:grid-cols-2 md:grid'>
         <div>
-          <h2 className='mb-1 text-2xl font-bold dark:text-light'>PDF</h2>
+          <h2 className='mb-1 text-2xl font-bold dark:text-light'>Modul</h2>
           {pdf.map((ppt, index) => (
             <div key={index}>
               <Link href={`/materi/${ppt.title}`}>
@@ -45,7 +45,7 @@ export default function Materi () {
           ))}
         </div>
         <div>
-          <h2 className='mb-1 text-2xl font-bold dark:text-light'>PPTX</h2>
+          <h2 className='mb-1 text-2xl font-bold dark:text-light'>Materi</h2>
           {pptx.map((ppt, index) => (
             <div key={index}>
               <Link href={`/materi/${ppt.title}`}>

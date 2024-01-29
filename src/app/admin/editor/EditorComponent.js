@@ -1,5 +1,5 @@
 'use client'
-import '../../../node_modules/@mdxeditor/editor/dist/style.css'
+import '../../../../node_modules/@mdxeditor/editor/dist/style.css'
 import React, { useRef, useState } from 'react'
 import { getFormattedDate } from '@/src/utils/getDate'
 import { convertStateToMDX } from '@/src/utils/mdx'
@@ -63,7 +63,7 @@ const Editor = ({ markdown, editorRef }) => {
 
       setState(prev => ({
         ...prev,
-        image: `../../public${json.imagePath}`
+        image: `@/public${json.imagePath}`
       }))
 
       console.log('Image uploaded:', json.imagePath)

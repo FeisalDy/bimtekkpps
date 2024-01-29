@@ -8,7 +8,6 @@ const PptxUploader = () => {
   const [download, setDownload] = useState('')
 
   const handleUpload = async () => {
-    console.log('Type state:', type)
     try {
       const response = await fetch('/api/pptx/upload', {
         method: 'POST',
