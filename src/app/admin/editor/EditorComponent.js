@@ -63,7 +63,7 @@ const Editor = ({ markdown, editorRef }) => {
 
       setState(prev => ({
         ...prev,
-        image: `@/public${json.imagePath}`
+        image: `../../public${json.imagePath}`
       }))
 
       console.log('Image uploaded:', json.imagePath)
