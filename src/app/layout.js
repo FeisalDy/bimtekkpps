@@ -73,10 +73,10 @@ export default function RootLayout ({ children }) {
     document.documentElement.classList.remove('dark')
   }`}
           </Script>
-          <Header />
+          {/* <Header /> */}
           {/* {children} */}
           <main className='flex-grow'>{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </Provider>
       </body>
     </html>

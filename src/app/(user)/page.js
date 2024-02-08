@@ -1,8 +1,8 @@
 import { allBlogs } from 'contentlayer/generated'
-import HomeCoverSection from '../components/Home/HomeCoverSection'
-import FeaturedPosts from '../components/Home/FeaturedPosts'
-import RecentPosts from '../components/Home/RecentPosts'
-import Video from '../components/Home/Video'
+import HomeCoverSection from '@/src/components/Home/HomeCoverSection'
+import FeaturedPosts from '@/src/components/Home/FeaturedPosts'
+import RecentPosts from '@/src/components/Home/RecentPosts'
+import Video from '@/src/components/Home/Video'
 
 export default function Home () {
   return (
