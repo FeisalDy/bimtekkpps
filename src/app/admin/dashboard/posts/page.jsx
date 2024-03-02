@@ -21,7 +21,7 @@ export default function Page () {
   //   const { data: products, error } = useSWR(
   //     'https://api.escuelajs.co/api/v1/products',
   //     fetcher
-  //   )
+  //   )showModal
   const products = allBlogs
 
   const deleteItemHandler = () => {
@@ -140,7 +140,7 @@ export default function Page () {
     return (
       showModal && (
         <div
-          className={`fixed top-0 left-0 right-0 z-40 flex  items-center justify-center mx-auto  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+          className={`fixed top-0 mt-16 left-0 right-0 flex  items-center justify-center mx-auto  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
         >
           <div
             className={`${
