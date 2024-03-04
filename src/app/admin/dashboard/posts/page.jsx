@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { allBlogs } from 'contentlayer/generated'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
-import { Button } from './editor/EditorComponent'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 const EditorComp = dynamic(() => import('./editor/EditorComponent'), {
   ssr: false
@@ -24,18 +25,70 @@ export default function Page () {
   //   )showModal
   const products = allBlogs
 
-  const deleteItemHandler = () => {
-    toast.success('Item successfully deleted!', {
-      position: 'bottom-right',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light'
+  const deleteItemHandler = fileName => {
+    confirmAlert({
+      title: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this item?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              const formData = new FormData()
+              formData.append('fileName', fileName)
+
+              const response = await fetch('/api/delete', {
+                method: 'DELETE',
+                body: formData
+              })
+
+              const data = await response.json()
+              if (data.status === 200) {
+                toast.success('Item successfully deleted!', {
+                  position: 'bottom-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light'
+                })
+              } else {
+                toast.error('Failed to delete item. Please try again later.', {
+                  position: 'bottom-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light'
+                })
+              }
+            } catch (error) {
+              console.error('Error deleting item:', error)
+              toast.error('Failed to delete item. Please try again later.', {
+                position: 'bottom-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light'
+              })
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
     })
   }
+
   const saveItemHandler = () => {
     setSaving(true)
     setTimeout(() => {
@@ -112,7 +165,7 @@ export default function Page () {
                 </button>
                 <button
                   className='ml-4 font-medium text-red-600 dark:text-red-500 hover:underline'
-                  onClick={deleteItemHandler}
+                  onClick={() => deleteItemHandler(item.title)}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -140,7 +193,7 @@ export default function Page () {
     return (
       showModal && (
         <div
-          className={`fixed top-0 mt-16 left-0 right-0 flex  items-center justify-center mx-auto  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+          className={`fixed top-0 my-16 left-0 right-0 flex  items-center justify-center mx-auto  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(85%-1rem)] max-h-full`}
         >
           <div
             className={`${
@@ -368,7 +421,7 @@ export default function Page () {
         {/* <DeleteToast /> */}
         <ToastContainer
           position='bottom-right'
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -390,22 +443,10 @@ export default function Page () {
               <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                 <tr>
                   <th scope='col' className='p-4'>
-                    <div className='flex items-center'>
-                      <input
-                        id='checkbox-all-search'
-                        type='checkbox'
-                        className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                      />
-                      <label htmlFor='checkbox-all-search' className='sr-only'>
-                        checkbox
-                      </label>
-                    </div>
+                    No
                   </th>
                   <th scope='col' className='px-6 py-3'>
-                    Name
-                  </th>
-                  <th scope='col' className='px-6 py-3'>
-                    Position
+                    Title
                   </th>
                   <th scope='col' className='px-6 py-3'>
                     Status
@@ -416,26 +457,11 @@ export default function Page () {
                 </tr>
               </thead>
               <tbody>
-                {loadingRowsCount.map(product => (
+                {loadingRowsCount.map(products => (
                   <tr
-                    key={`${product.id}`}
+                    key={`${products.id}`}
                     className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
                   >
-                    <td className='w-4 p-4'>
-                      <div className='flex items-center'>
-                        <input
-                          id='checkbox-table-search-1'
-                          type='checkbox'
-                          className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                        />
-                        <label
-                          htmlFor='checkbox-table-search-1'
-                          className='sr-only'
-                        >
-                          <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
-                        </label>
-                      </div>
-                    </td>
                     <th
                       scope='row'
                       className='flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white'

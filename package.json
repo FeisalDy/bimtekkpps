@@ -41,6 +41,7 @@
     "postcss": "8.4.31",
     "pspdfkit": "^2024.1.0",
     "react": "18.2.0",
+    "react-confirm-alert": "^3.0.6",
     "react-documents": "^1.2.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
