@@ -33,21 +33,21 @@ async function imageUploadHandler (image) {
   return json.imagePath
 }
 
-const Editor = ({ markdown, editorRef }) => {
+const Editor = ({ markdown, editorRef, state, setState }) => {
   const ref = useRef(null)
   const [mdx, setMdx] = useState('')
   const [file, setFile] = useState()
   const [loading, setLoading] = useState(false)
-  const [state, setState] = useState({
-    title: '',
-    publishedAt: getFormattedDate(),
-    updatedAt: getFormattedDate(),
-    description: '',
-    image: '',
-    author: 'Anonymous',
-    tags: '',
-    content: ''
-  })
+  //   const [state, setState] = useState({
+  //     title: '',
+  //     publishedAt: getFormattedDate(),
+  //     updatedAt: getFormattedDate(),
+  //     description: '',
+  //     image: '',
+  //     author: 'Anonymous',
+  //     tags: '',
+  //     content: ''
+  //   })
 
   const handleImageUpload = async selectedFile => {
     try {
