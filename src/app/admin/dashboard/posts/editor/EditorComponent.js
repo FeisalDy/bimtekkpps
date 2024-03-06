@@ -1,7 +1,6 @@
 'use client'
 import '../../../../../../node_modules/@mdxeditor/editor/dist/style.css'
 import React, { useRef, useState } from 'react'
-import { getFormattedDate } from '@/src/utils/getDate'
 import { convertStateToMDX } from '@/src/utils/mdx'
 import {
   MDXEditor,
@@ -38,16 +37,6 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
   const [mdx, setMdx] = useState('')
   const [file, setFile] = useState()
   const [loading, setLoading] = useState(false)
-  //   const [state, setState] = useState({
-  //     title: '',
-  //     publishedAt: getFormattedDate(),
-  //     updatedAt: getFormattedDate(),
-  //     description: '',
-  //     image: '',
-  //     author: 'Anonymous',
-  //     tags: '',
-  //     content: ''
-  //   })
 
   const handleImageUpload = async selectedFile => {
     try {
@@ -116,6 +105,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
             onChange={e =>
               setState(prev => ({ ...prev, title: e.target.value }))
             }
+            defaultValue={state.title}
           />
         </div>
 
@@ -125,10 +115,11 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
             aria-describedby='user_avatar_help'
             onChange={e => {
               setFile(e.target.files?.[0])
-              handleImageUpload(e.target.files?.[0]) // Upload image as soon as it's selected
+              handleImageUpload(e.target.files?.[0])
             }}
             type='file'
             name='file'
+            // defaultValue={}
           />
         </div>
 
@@ -147,6 +138,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
             onChange={e =>
               setState(prev => ({ ...prev, description: e.target.value }))
             }
+            defaultValue={state.description}
           />
         </div>
 
@@ -164,6 +156,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
             onChange={e =>
               setState(prev => ({ ...prev, tags: e.target.value }))
             }
+            defaultValue={state.tags}
           />
         </div>
 
@@ -171,7 +164,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
           <MDXEditor
             className='min-w-full col-span-12 prose font-in sm:prose-base md:prose-lg max-w-max prose-blockquote:bg-accent/20 prose-blockquote:p-2 prose-blockquote:px-6 prose-blockquote:border-accent prose-blockquote:not-italic prose-blockquote:rounded-r-lg prose-li:marker:text-accent dark:prose-invert dark:prose-blockquote:border-accentDark dark:prose-blockquote:bg-accentDark/20 dark:prose-li:marker:text-accentDark'
             ref={ref}
-            markdown={markdown}
+            markdown={state.content}
             plugins={[
               headingsPlugin(),
               listsPlugin(),

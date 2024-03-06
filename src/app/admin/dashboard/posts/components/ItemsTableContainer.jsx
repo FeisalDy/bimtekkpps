@@ -5,14 +5,22 @@ import { TableActions } from './tableaction'
 import { ItemsTable } from './itemstable'
 import { TableFooter } from './tablefooter'
 
-export const ItemsTableContainer = ({ products, onOpen }) => {
+export const ItemsTableContainer = ({
+  products,
+  onOpen,
+  isType,
+  state,
+  setState,
+  isEdit,
+  clearState
+}) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleChangePage = page => {
     setCurrentPage(page)
   }
-  let pageSize = 2
+  let pageSize = 10
   const startIndex = (currentPage - 1) * pageSize
   const endIndex = startIndex + pageSize
   const totalPages = Math.ceil(products.length / pageSize)
@@ -35,10 +43,19 @@ export const ItemsTableContainer = ({ products, onOpen }) => {
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         onOpen={onOpen}
+        isType={isType}
+        state={state}
+        setState={setState}
+        clearState={clearState}
       />
       <div className='overflow-x-auto'>
         <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-          <ItemsTable items={currentData} onOpen={onOpen} />
+          <ItemsTable
+            items={currentData}
+            onOpen={onOpen}
+            isType={isType}
+            isEdit={isEdit}
+          />
         </div>
       </div>
       <TableFooter

@@ -19,7 +19,9 @@ export const ItemsModal = ({ showModal, onClose, state, setState }) => {
           >
             <div className='flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600'>
               <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-                Add post
+                {`${
+                  state.type.charAt(0).toUpperCase() + state.type.slice(1)
+                }  post`}
               </h3>
               <button
                 type='button'
