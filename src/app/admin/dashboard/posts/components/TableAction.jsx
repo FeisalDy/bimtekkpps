@@ -2,11 +2,9 @@ export const TableActions = ({
   searchTerm,
   handleSearch,
   onOpen,
-  isType,
   clearState
 }) => {
   const handleOpen = () => {
-    isType('add')
     onOpen()
     clearState()
   }

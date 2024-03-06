@@ -1,15 +1,20 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { allBlogs } from 'contentlayer/generated'
 import { LoadingTable } from './components/LoadingTable'
 import { ItemsModal } from './components/ItemsModal'
 import { ItemsTableContainer } from './components/ItemsTableContainer'
 import { getFormattedDate } from '@/src/utils/getDate'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function Page () {
   const [showModal, setShowModal] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [status, setStatus] = useState(0)
   const [state, setState] = useState({
+    oldTitle: '',
     type: '',
     title: '',
     publishedAt: getFormattedDate(),
@@ -18,7 +23,8 @@ export default function Page () {
     image: '',
     author: 'Anonymous',
     tags: '',
-    content: ''
+    content: '',
+    editImage: ''
   })
   const products = allBlogs
 
@@ -38,13 +44,15 @@ export default function Page () {
     setShowModal(true)
   }
 
-  const handleType = type => {
-    setState({ ...state, type })
+  const handleStatus = status => {
+    setStatus(status)
   }
 
   const handleEditItem = item => {
     setState({
       ...state,
+      oldTitle: item.title,
+      type: 'edit',
       title: item.title,
       publishedAt: getFormattedDate(),
       updatedAt: getFormattedDate(),
@@ -59,6 +67,7 @@ export default function Page () {
   const clearState = () => {
     setState({
       ...state,
+      type: 'add',
       title: '',
       publishedAt: getFormattedDate(),
       updatedAt: getFormattedDate(),
@@ -66,9 +75,43 @@ export default function Page () {
       image: '',
       author: 'Anonymous',
       tags: '',
-      content: ''
+      content: '',
+      editImage: ''
     })
   }
+
+  const handleImage = image => {
+    setState({ ...state, editImage: image })
+  }
+
+  useEffect(() => {
+    if (status === 200) {
+      toast.success('Action succeed!', {
+        position: 'bottom-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      })
+    } else if (status === 500) {
+      toast.error('Action failed!. Please try again later.', {
+        position: 'bottom-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      })
+    }
+    setTimeout(() => {
+      setStatus(0)
+    }, 3000)
+  }, [status])
 
   return (
     <section className='p-2'>
@@ -81,7 +124,6 @@ export default function Page () {
           <ItemsTableContainer
             products={products}
             onOpen={handleOpenModal}
-            isType={handleType}
             state={state}
             setState={setState}
             isEdit={handleEditItem}
@@ -96,6 +138,8 @@ export default function Page () {
         onClose={handleCloseModal}
         state={state}
         setState={setState}
+        imageChanged={handleImage}
+        handleStatus={handleStatus}
       />
     </section>
   )

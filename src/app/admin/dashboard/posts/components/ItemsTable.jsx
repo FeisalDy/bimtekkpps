@@ -3,14 +3,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-export const ItemsTable = ({
-  items,
-  onOpen,
-  isType,
-  state,
-  setState,
-  isEdit
-}) => {
+export const ItemsTable = ({ items, onOpen, isEdit }) => {
   const deleteItemHandler = fileName => {
     confirmAlert({
       title: 'Confirm Deletion',
@@ -77,7 +70,6 @@ export const ItemsTable = ({
 
   const handleOpen = item => {
     onOpen(item)
-    isType('edit')
     isEdit(item)
   }
 

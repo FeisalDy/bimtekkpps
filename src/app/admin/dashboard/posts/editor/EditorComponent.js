@@ -18,6 +18,8 @@ import {
   ListsToggle,
   Separator
 } from '@mdxeditor/editor'
+import { useDropzone } from 'react-dropzone'
+import DisplayImage from '../components/showImage'
 
 async function imageUploadHandler (image) {
   const formData = new FormData()
@@ -32,18 +34,29 @@ async function imageUploadHandler (image) {
   return json.imagePath
 }
 
-const Editor = ({ markdown, editorRef, state, setState }) => {
+const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
   const ref = useRef(null)
   const [mdx, setMdx] = useState('')
-  const [file, setFile] = useState()
+  const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const handleImageUpload = async selectedFile => {
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png',
+    onDrop: acceptedFiles => {
+      setFile(acceptedFiles[0])
+    }
+  })
+
+  const handleImageUpload = async () => {
+    if (!file) {
+      return
+    }
+
     try {
       setLoading(true)
 
       const formData = new FormData()
-      formData.append('file', selectedFile)
+      formData.append('file', file)
 
       const response = await fetch('/api/upload', {
         method: 'POST',
@@ -51,11 +64,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
       })
 
       const json = await response.json()
-
-      setState(prev => ({
-        ...prev,
-        image: `../../public${json.imagePath}`
-      }))
+      imageChanged(`../../public${json.imagePath}`)
 
       console.log('Image uploaded:', json.imagePath)
     } catch (error) {
@@ -66,6 +75,7 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
   }
 
   const saveToFolder = async (folderName, mdxContent) => {
+    setLoading(true)
     try {
       const formData = new FormData()
       formData.append('folderName', folderName)
@@ -78,13 +88,67 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
 
       const result = await response.json()
 
-      if (result.success) {
-        console.log('MDX content saved successfully.')
+      if (result.status === 201) {
+        handleStatus(200)
+        // toast.success('Action succeed!', {
+        //   position: 'bottom-right',
+        //   autoClose: 2000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'light'
+        // })
       } else {
-        console.error('Error saving MDX content:', result.error)
+        handleStatus(500)
+        // toast.error('Action failed!. Please try again later.', {
+        //   position: 'bottom-right',
+        //   autoClose: 2000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'light'
+        // })
       }
     } catch (error) {
-      console.error('Error saving MDX content:', error)
+      handleStatus(500)
+      //   toast.error('Action failed!. Please try again later.', {
+      //     position: 'bottom-right',
+      //     autoClose: 2000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: 'light'
+      //   })
+    } finally {
+      setLoading(false)
+      onClose()
+    }
+  }
+
+  const editToFolder = async (fileName, state) => {
+    const formData = new FormData()
+    formData.append('fileName', fileName)
+
+    const response = await fetch('/api/delete', {
+      method: 'DELETE',
+      body: formData
+    })
+
+    const data = await response.json()
+
+    if (data.status === 200) {
+      try {
+        await saveToFolder(state.title, convertStateToMDX(state))
+      } catch (error) {
+        console.error('Error saving MDX content:', error)
+      }
+    } else {
     }
   }
 
@@ -110,17 +174,39 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
         </div>
 
         <div className='mb-4'>
-          <input
-            className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-            aria-describedby='user_avatar_help'
-            onChange={e => {
-              setFile(e.target.files?.[0])
-              handleImageUpload(e.target.files?.[0])
-            }}
-            type='file'
-            name='file'
-            // defaultValue={}
-          />
+          <DisplayImage state={state} />
+          <div className='mb-4'>
+            <label
+              htmlFor='dropzone'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+            >
+              Image (Drag and drop or select)
+            </label>
+            <div
+              {...getRootProps({
+                className:
+                  'border rounded-md min-h-[100px] border-dashed border-gray-300 p-4 dark:border-gray-600'
+              })}
+            >
+              <input {...getInputProps()} />
+              <p className='text-gray-500'>
+                Drag and drop an image here, or click to select.
+              </p>
+            </div>
+            {file && (
+              <p className='mt-2 text-sm text-gray-500'>
+                Selected: {file.name}
+              </p>
+            )}
+          </div>
+          <button
+            type='button'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            onClick={handleImageUpload}
+            disabled={loading}
+          >
+            {loading ? 'Uploading...' : 'Upload Image'}
+          </button>
         </div>
 
         <div className='mb-4'>
@@ -205,7 +291,9 @@ const Editor = ({ markdown, editorRef, state, setState }) => {
             className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             onClick={() => {
               setMdx(convertStateToMDX(state))
-              saveToFolder(state.title, convertStateToMDX(state))
+              state.type === 'edit'
+                ? editToFolder(state.oldTitle, state)
+                : saveToFolder(state.title, convertStateToMDX(state))
             }}
           >
             Save

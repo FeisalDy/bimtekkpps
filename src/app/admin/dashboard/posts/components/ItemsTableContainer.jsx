@@ -8,7 +8,6 @@ import { TableFooter } from './tablefooter'
 export const ItemsTableContainer = ({
   products,
   onOpen,
-  isType,
   state,
   setState,
   isEdit,
@@ -43,23 +42,16 @@ export const ItemsTableContainer = ({
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         onOpen={onOpen}
-        isType={isType}
         state={state}
         setState={setState}
         clearState={clearState}
       />
       <div className='overflow-x-auto'>
         <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-          <ItemsTable
-            items={currentData}
-            onOpen={onOpen}
-            isType={isType}
-            isEdit={isEdit}
-          />
+          <ItemsTable items={currentData} onOpen={onOpen} isEdit={isEdit} />
         </div>
       </div>
       <TableFooter
-        // totalPages={totalPages}
         totalPages={Math.ceil(filteredData.length / pageSize)}
         handleChangePage={handleChangePage}
         currentPage={currentPage}

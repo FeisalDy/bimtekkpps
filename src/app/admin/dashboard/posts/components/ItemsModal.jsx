@@ -2,7 +2,14 @@ import { lazy, Suspense } from 'react'
 
 const EditorComp = lazy(() => import('../editor/EditorComponent'))
 
-export const ItemsModal = ({ showModal, onClose, state, setState }) => {
+export const ItemsModal = ({
+  showModal,
+  onClose,
+  state,
+  setState,
+  imageChanged,
+  handleStatus
+}) => {
   return (
     showModal && (
       <div
@@ -46,8 +53,14 @@ export const ItemsModal = ({ showModal, onClose, state, setState }) => {
 
             <div className='space-y-6'>
               <Suspense fallback={null}>
-                {/* <EditorComp markdown={markdown} /> */}
-                <EditorComp markdown={''} state={state} setState={setState} />
+                <EditorComp
+                  markdown={''}
+                  state={state}
+                  setState={setState}
+                  imageChanged={imageChanged}
+                  onClose={onClose}
+                  handleStatus={handleStatus}
+                />
               </Suspense>
             </div>
           </form>
