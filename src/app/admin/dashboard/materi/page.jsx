@@ -4,8 +4,11 @@ import { LoadingTable } from './components/LoadingTable'
 import { ItemsTableContainer } from './components/ItemsTableContainer'
 import { ItemsModal } from './components/ItemsModal'
 import { useMateri } from '@/src/hooks/useMateri'
+import { useSession } from 'next-auth/react'
 
 export default function Page () {
+  const { data: session, status } = useSession()
+
   const { materi, materiLoading } = useMateri()
   const [showModal, setShowModal] = useState(false)
   const [state, setState] = useState({
@@ -31,14 +34,6 @@ export default function Page () {
 
   return (
     <section className='p-2'>
-      <div>
-        {state && (
-          <div>
-            <pre>{JSON.stringify(state, null, 2)}</pre>
-          </div>
-        )}
-      </div>
-
       <div
         className={`mx-auto max-w-screen-xl px-2 lg:px-12 ${
           showModal ? 'blur-lg' : ''
@@ -62,6 +57,7 @@ export default function Page () {
         state={state}
         setState={setState}
         handleFile={handleFileChange}
+        session={session}
       />
     </section>
   )

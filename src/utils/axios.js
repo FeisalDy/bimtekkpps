@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const Axios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AXIOS_BASE_URL,
-  timeout: 5000
+  timeout: 20000
 })
 
 // Retry on timeout with a maximum of 3 retries

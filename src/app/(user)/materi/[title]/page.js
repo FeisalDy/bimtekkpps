@@ -34,7 +34,7 @@ export default async function Page ({ params, searchParams }) {
         >
           <iframe
             src={data.url}
-            // src='https://drive.google.com/file/d/1ZvbhuQP_AS9keATLNLaIPijT93dq5Tp2/preview'
+            // src='https://docs.google.com/presentation/d/1Xhx6fh6mugiqLIEwxS9frbO0IHyiBGc0/embed?start=false&loop=false&delayms=3000'
             frameborder='0'
             width='100%'
             height='100%'

@@ -6,7 +6,8 @@ export const ItemsModal = ({
   onClose,
   state,
   setState,
-  handleFile
+  handleFile,
+  session
 }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept:
@@ -16,13 +17,15 @@ export const ItemsModal = ({
     }
   })
 
-  const handleSubmission = e => {
+  const handleSubmission = async e => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('title', state.title)
     formData.append('file', state.file)
+    formData.append('accessToken', session?.accessToken)
     createMateri(formData)
   }
+
   return (
     showModal && (
       <div

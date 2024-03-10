@@ -12,8 +12,15 @@ export default function Materi () {
       const res = await Axios.get('/pptx')
       const allPptx = res.data
 
-      const pdfItems = allPptx.filter(item => item.type === 'pdf')
-      const nonPdfItems = allPptx.filter(item => item.type === 'pptx')
+      const pdfItems = allPptx.filter(
+        item => item.type === 'pdf' || item.type === 'application/pdf'
+      )
+      const nonPdfItems = allPptx.filter(
+        item =>
+          item.type === 'pptx' ||
+          item.type ===
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      )
 
       nonPdfItems.sort((a, b) => a.title.localeCompare(b.title))
       pdfItems.sort((a, b) => a.title.localeCompare(b.title))
