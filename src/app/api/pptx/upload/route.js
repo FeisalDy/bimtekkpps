@@ -44,12 +44,34 @@ export const POST = async req => {
     uploadedFiles.push(uploadResponse.data.id)
 
     let url = `https://drive.google.com/file/d/${uploadResponse.data.id}/preview`
+    // let type = file.type
+    // if (
+    //   type ===
+    //   'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    // ) {
+    //   url = `https://docs.google.com/presentation/d/${uploadResponse.data.id}/embed?start=false&loop=false&delayms=3000`
+    // }
+
     let type = file.type
     if (
       type ===
       'application/vnd.openxmlformats-officedocument.presentationml.presentation'
     ) {
-      url = `https://docs.google.com/presentation/d/${uploadResponse.data.id}/embed?start=false&loop=false&delayms=3000`
+      const uniqueFileId = uploadResponse.data.id
+      const permission = {
+        role: 'reader',
+        type: 'anyone'
+      }
+      await drive.permissions.create({
+        fileId: uniqueFileId,
+        requestBody: permission
+      })
+
+      const webViewLink = `https://drive.google.com/file/d/${uniqueFileId}/view`
+      const revisionId = uploadResponse.data.headRevisionId
+      console.log('revisionId: ', revisionId)
+
+      url = `https://docs.google.com/presentation/d/${uniqueFileId}/embed?start=true&loop=true&delayms=5000&rm=minimal`
     }
 
     const newPptx = new Pptx({
@@ -97,7 +119,7 @@ async function uploadToDrive (drive, title, fileData) {
     const response = await drive.files.create({
       resource: fileMetadata,
       media,
-      fields: 'id'
+      fields: 'id, headRevisionId'
     })
     return response
   } catch (error) {

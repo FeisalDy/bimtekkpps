@@ -1,4 +1,68 @@
-export const ItemsTable = ({ items, onOpen }) => {
+import { toast } from 'react-toastify'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-toastify/dist/ReactToastify.css'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+
+export const ItemsTable = ({ items, onOpen, mutate }) => {
+  const deleteItemHandler = title => {
+    confirmAlert({
+      title: 'Confirm Deletion',
+      message: 'Are you sure you want to delete this item?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              const res = await fetch(`/api/pptx/${title}`, {
+                method: 'DELETE'
+              })
+              if (res.status === 200) {
+                mutate('pptx')
+                toast.success('Item successfully deleted!', {
+                  position: 'bottom-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light'
+                })
+              } else {
+                toast.error('Failed to delete item. Please try again later.', {
+                  position: 'bottom-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light'
+                })
+              }
+            } catch (error) {
+              console.error('Error deleting item:', error)
+              toast.error('Failed to delete item. Please try again later.', {
+                position: 'bottom-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light'
+              })
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    })
+  }
+
   return (
     <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
       <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -63,7 +127,7 @@ export const ItemsTable = ({ items, onOpen }) => {
               </button>
               <button
                 className='ml-4 font-medium text-red-600 dark:text-red-500 hover:underline'
-                // onClick={() => deleteItemHandler(item.title)}
+                onClick={() => deleteItemHandler(item.title)}
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'

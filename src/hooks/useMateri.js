@@ -1,54 +1,32 @@
 import useSWR from 'swr'
 import * as MateriApi from '@/src/lib/materi'
 import { AxiosError } from 'axios'
+import Axios from '@/src/utils/axios'
+
+const fetcher = url => Axios.get(url).then(res => res.data)
 
 export function useMateri () {
-  const { data, isLoading } = useSWR(
-    'materi',
-    async () => {
-      try {
-        return await MateriApi.getMateri()
-      } catch (error) {
-        if (error instanceof AxiosError && error.response?.status === 404) {
-          return null
-        } else {
-          throw error
-        }
-      }
-    },
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
-  )
+  const { data, error, isLoading } = useSWR('pptx', fetcher)
 
   return {
     materi: data,
-    materiLoading: isLoading
+    materiLoading: isLoading,
+    isError: error
   }
 }
 
 export function useCreateMateri (data) {
-  const { mutate } = useSWR(
-    data,
-    async () => {
-      try {
-        return await MateriApi.createMateri(data)
-      } catch (error) {
-        if (error instanceof AxiosError && error.response?.status === 404) {
-          return null
-        } else {
-          throw error
-        }
+  const { mutate } = useSWR(data, async () => {
+    try {
+      return await MateriApi.createMateri(data)
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        return null
+      } else {
+        throw error
       }
-    },
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
     }
-  )
+  })
 
   return {
     createMateri: mutate

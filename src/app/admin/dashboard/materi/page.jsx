@@ -5,11 +5,13 @@ import { ItemsTableContainer } from './components/ItemsTableContainer'
 import { ItemsModal } from './components/ItemsModal'
 import { useMateri } from '@/src/hooks/useMateri'
 import { useSession } from 'next-auth/react'
+import useSWR, { useSWRConfig } from 'swr'
 
 export default function Page () {
+  const { mutate } = useSWRConfig()
   const { data: session, status } = useSession()
 
-  const { materi, materiLoading } = useMateri()
+  const { materi, materiLoading, isError } = useMateri()
   const [showModal, setShowModal] = useState(false)
   const [state, setState] = useState({
     title: '',
@@ -45,6 +47,7 @@ export default function Page () {
             onOpen={handleOpenModal}
             state={state}
             setState={setState}
+            mutate={mutate}
             // isEdit={handleEditItem}
             // clearState={clearState}
           />

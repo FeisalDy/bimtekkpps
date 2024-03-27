@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { TableActions } from './tableaction'
-import { ItemsTable } from './itemstable'
-import { TableFooter } from './tablefooter'
+import { TableActions } from './Tableaction'
+import { ItemsTable } from './ItemsTable'
+import { TableFooter } from './TableFooter'
 
 export const ItemsTableContainer = ({
   materi,
@@ -11,7 +11,8 @@ export const ItemsTableContainer = ({
   state,
   setState,
   isEdit,
-  clearState
+  clearState,
+  mutate
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
@@ -49,7 +50,7 @@ export const ItemsTableContainer = ({
       <div className='overflow-x-auto'>
         <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
           {/* <ItemsTable items={currentData} onOpen={onOpen} isEdit={isEdit} /> */}
-          <ItemsTable items={currentData} onOpen={onOpen} />
+          <ItemsTable items={currentData} onOpen={onOpen} mutate={mutate} />
         </div>
       </div>
       <TableFooter
