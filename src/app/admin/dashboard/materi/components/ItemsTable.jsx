@@ -3,7 +3,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-export const ItemsTable = ({ items, onOpen, mutate }) => {
+export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
   const deleteItemHandler = title => {
     confirmAlert({
       title: 'Confirm Deletion',
@@ -14,7 +14,10 @@ export const ItemsTable = ({ items, onOpen, mutate }) => {
           onClick: async () => {
             try {
               const res = await fetch(`/api/pptx/${title}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                  accessToken: session?.accessToken
+                }
               })
               if (res.status === 200) {
                 mutate('pptx')
@@ -63,6 +66,11 @@ export const ItemsTable = ({ items, onOpen, mutate }) => {
     })
   }
 
+  const handleOpen = item => {
+    onOpen()
+    isEdit(item)
+  }
+
   return (
     <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
       <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -108,7 +116,7 @@ export const ItemsTable = ({ items, onOpen, mutate }) => {
                 type='button'
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
                 // onClick={onOpen}
-                // onClick={() => handleOpen(item)}
+                onClick={() => handleOpen(item)}
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'

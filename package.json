@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@types/react": "18.2.52",
+    "cross-env": "^7.0.3",
     "encoding": "^0.1.13",
     "sharp": "^0.32.6"
   }

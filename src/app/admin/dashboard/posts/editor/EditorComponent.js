@@ -90,41 +90,11 @@ const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
 
       if (result.status === 201) {
         handleStatus(200)
-        // toast.success('Action succeed!', {
-        //   position: 'bottom-right',
-        //   autoClose: 2000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'light'
-        // })
       } else {
         handleStatus(500)
-        // toast.error('Action failed!. Please try again later.', {
-        //   position: 'bottom-right',
-        //   autoClose: 2000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'light'
-        // })
       }
     } catch (error) {
       handleStatus(500)
-      //   toast.error('Action failed!. Please try again later.', {
-      //     position: 'bottom-right',
-      //     autoClose: 2000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: 'light'
-      //   })
     } finally {
       setLoading(false)
       onClose()

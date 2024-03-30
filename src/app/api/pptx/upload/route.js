@@ -17,6 +17,7 @@ export const POST = async req => {
   const token = formData.get('accessToken')
 
   await connect()
+  console.log('session: ', session)
 
   const oauth2Client = new google.auth.OAuth2(
     GOOGLE_CLIENT_ID,
@@ -44,13 +45,6 @@ export const POST = async req => {
     uploadedFiles.push(uploadResponse.data.id)
 
     let url = `https://drive.google.com/file/d/${uploadResponse.data.id}/preview`
-    // let type = file.type
-    // if (
-    //   type ===
-    //   'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-    // ) {
-    //   url = `https://docs.google.com/presentation/d/${uploadResponse.data.id}/embed?start=false&loop=false&delayms=3000`
-    // }
 
     let type = file.type
     if (

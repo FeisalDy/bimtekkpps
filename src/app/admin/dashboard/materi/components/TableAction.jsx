@@ -6,7 +6,8 @@ export const TableActions = ({
 }) => {
   const handleOpen = () => {
     onOpen()
-    // clearState()
+    clearState()
+    
   }
   return (
     <div className='flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4'>
