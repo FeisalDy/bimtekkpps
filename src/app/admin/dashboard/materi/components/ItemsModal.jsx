@@ -32,7 +32,8 @@ export const ItemsModal = ({
       const res = await createMateri(formData)
 
       if (res.status === 201) {
-        mutate('pptx')
+        mutate('pptx?type=materi')
+        mutate('pptx?type=modal')
         handleStatus(200)
       } else {
         handleStatus(500)
@@ -58,7 +59,8 @@ export const ItemsModal = ({
       const res = await updateMateri(state, formData)
 
       if (res.status === 200) {
-        mutate('pptx')
+        mutate('pptx?type=materi')
+        mutate('pptx?type=modal')
         handleStatus(200)
       } else {
         handleStatus(500)

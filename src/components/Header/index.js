@@ -155,13 +155,6 @@ const Header = () => {
         >
           <DribbbleIcon className='transition-all duration-200 hover:scale-125 ease' />
         </a>
-        {/* <a
-          className='inline-block w-6 h-6 mr-4 cursor-pointer'
-          aria-label='Check my profile on Dribbble'
-          onClick={signOut}
-        >
-          <DribbbleIcon className='transition-all duration-200 hover:scale-125 ease' />
-        </a> */}
       </div>
     </header>
   )

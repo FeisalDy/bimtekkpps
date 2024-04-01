@@ -1,9 +1,19 @@
 import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
+import { TbEyeShare } from 'react-icons/tb'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
+export const ItemsTable = ({
+  items,
+  onOpen,
+  mutate,
+  isEdit,
+  session,
+  currentPage,
+  pageSize,
+  activeButton
+}) => {
   const deleteItemHandler = title => {
     confirmAlert({
       title: 'Confirm Deletion',
@@ -20,7 +30,8 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
                 }
               })
               if (res.status === 200) {
-                mutate('pptx')
+                mutate('pptx?type=materi')
+                mutate('pptx?type=modal')
                 toast.success('Item successfully deleted!', {
                   position: 'bottom-right',
                   autoClose: 2000,
@@ -71,6 +82,8 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
     isEdit(item)
   }
 
+  const calculateIndex = index => (currentPage - 1) * pageSize + index + 1
+
   return (
     <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
       <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -84,7 +97,7 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
           <th scope='col' className='px-6 py-3'>
             Type
           </th>
-          <th scope='col' className='px-6 py-3'>
+          <th scope='col' className='px-6 py-3 text-center'>
             Action
           </th>
         </tr>
@@ -96,7 +109,7 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
             className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
           >
             <td className='w-4 p-4'>
-              <div className='flex items-center'>{index + 1}</div>
+              <div className='flex items-center'>{calculateIndex(index)}</div>
             </td>
             <th
               scope='row'
@@ -111,11 +124,17 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
                 {item.type.toUpperCase()}
               </div>
             </td>
-            <td className='flex items-center px-6 py-4'>
+            <td className='flex justify-center gap-2 px-6 py-4'>
+              <a
+                target='_blank'
+                href={`/materi/${item.title}`}
+                className='font-medium hover-underline'
+              >
+                <TbEyeShare style={{ color: 'green', fontSize: '2em' }} />
+              </a>
               <button
                 type='button'
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                // onClick={onOpen}
                 onClick={() => handleOpen(item)}
               >
                 <svg
@@ -134,7 +153,7 @@ export const ItemsTable = ({ items, onOpen, mutate, isEdit, session }) => {
                 </svg>
               </button>
               <button
-                className='ml-4 font-medium text-red-600 dark:text-red-500 hover:underline'
+                className='font-medium text-red-600 dark:text-red-500 hover:underline'
                 onClick={() => deleteItemHandler(item.title)}
               >
                 <svg

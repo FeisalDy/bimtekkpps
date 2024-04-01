@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { TableActions } from './tableaction'
-import { ItemsTable } from './itemstable'
-import { TableFooter } from './tablefooter'
+import { TableActions } from './TableAction'
+import { ItemsTable } from './ItemsTable'
+import { TableFooter } from './TableFooter'
 
 export const ItemsTableContainer = ({
   products,
@@ -48,7 +48,13 @@ export const ItemsTableContainer = ({
       />
       <div className='overflow-x-auto'>
         <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-          <ItemsTable items={currentData} onOpen={onOpen} isEdit={isEdit} />
+          <ItemsTable
+            items={currentData}
+            onOpen={onOpen}
+            isEdit={isEdit}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
         </div>
       </div>
       <TableFooter

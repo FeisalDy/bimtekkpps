@@ -10,13 +10,12 @@ const GOOGLE_REDIRECT_URI = ['http://localhost:3000/oauth2callback']
 
 export const GET = async (req, { params }) => {
   try {
-    // await connect()
-    // // const pptx = await Pptx.where({ title: params.title }).findOne()
-    // const pptx = await Pptx.findOne({
-    //   title: { $regex: new RegExp(`^${params.title}$`, 'i') }
-    // })
-    // return new NextResponse(JSON.stringify(pptx), { status: 200 })
-    return new NextResponse('GET method not implemented', { status: 501 })
+    await connect()
+    // const pptx = await Pptx.where({ title: params.title }).findOne()
+    const pptx = await Pptx.findOne({
+      title: { $regex: new RegExp(`^${params.title}$`, 'i') }
+    })
+    return new NextResponse(JSON.stringify(pptx), { status: 200 })
   } catch (error) {
     return new NextResponse('Error getting articles', { status: 500 })
   }
@@ -39,7 +38,7 @@ export const PUT = async (req, { params }) => {
     })
   }
 
-  if (file != null) {
+  if (file != 'null') {
     const uploadedFiles = []
     const uploadResponse = await uploadToDrive(drive, newTitle, file)
     uploadedFiles.push(uploadResponse.data.id)
@@ -115,6 +114,24 @@ export const PUT = async (req, { params }) => {
         { title: params.title }, // Find by old title
         { $set: { title: newTitle } } // Update the title
       )
+
+      const updatePptx = await Pptx.findOne({ title: newTitle })
+
+      const old_url = updatePptx.url
+      const match = old_url.match(/\/file\/d\/([^\/]+)\/preview/)
+      const fileId = match ? match[1] : null
+
+      try {
+        const updateResponse = drive.files.update({
+          fileId: fileId,
+          resource: {
+            name: newTitle
+          }
+        })
+        console.log('File renamed on Drive:', updateResponse.data.id)
+      } catch (error) {
+        console.error('Error renaming file on Drive:', error.message)
+      }
 
       if (updateResult.matchedCount === 0) {
         return NextResponse.json({

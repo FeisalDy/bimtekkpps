@@ -6,10 +6,13 @@ import { initFlowbite } from 'flowbite'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
+import profileImg from '@/public/PPK.png'
+import { LuNewspaper } from 'react-icons/lu'
+import { RiPresentationLine } from 'react-icons/ri'
+
 export default function DashboardSidebarLayout ({ children }) {
   const [activeLink, setActiveLink] = useState('')
   const { data: session, status } = useSession()
-  console.log('seion', session)
 
   const pathname = usePathname()
   useEffect(() => {
@@ -45,14 +48,21 @@ export default function DashboardSidebarLayout ({ children }) {
                   ></path>
                 </svg>
               </button>
-              <Link href='https://flowbite.com' className='flex ml-2 md:mr-24'>
-                <img
-                  src='https://flowbite.com/docs/images/logo.svg'
-                  className='h-8 mr-3'
-                  alt='FlowBite Logo'
-                />
-                <span className='self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white'>
-                  Flowbite
+              <Link
+                href='/'
+                className='flex items-center text-dark dark:text-light'
+              >
+                <div className='w-12 mr-2 overflow-hidden md:w-12 md:mr-4'>
+                  <Image
+                    src={profileImg}
+                    alt='CodeBucks logo'
+                    className='w-full h-auto'
+                    sizes='20vw'
+                    priority
+                  />
+                </div>
+                <span className='text-lg font-bold dark:font-semibold md:text-xl'>
+                  PPK SEYEGAN
                 </span>
               </Link>
             </div>
@@ -129,30 +139,12 @@ export default function DashboardSidebarLayout ({ children }) {
                 href='/admin/dashboard/posts'
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:bg-gray-700'
               >
-                <svg
-                  aria-hidden='true'
-                  className={`w-6 h-6 transition duration-75 ${
-                    activeLink === '/admin/dashboard/posts'
-                      ? 'text-white'
-                      : 'text-gray-500'
-                  } dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
-                    clipRule='evenodd'
-                  ></path>
-                </svg>
                 <span
-                  className={`py-1 ${
-                    activeLink === '/admin/dashboard/posts'
-                      ? 'text-white ml-3'
-                      : 'ml-3'
+                  className={`py-1 flex items-center ml-4 gap-2 ${
+                    activeLink === '/admin/dashboard/posts' ? 'text-white ' : ''
                   }`}
                 >
+                  <LuNewspaper />
                   Posts
                 </span>
               </Link>
@@ -168,30 +160,12 @@ export default function DashboardSidebarLayout ({ children }) {
                 href='/admin/dashboard/materi'
                 className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white dark:hover:bg-gray-700'
               >
-                <svg
-                  aria-hidden='true'
-                  className={`w-6 h-6 transition duration-75 ${
-                    activeLink === '/admin/dashboard/materi'
-                      ? 'text-white'
-                      : 'text-gray-500'
-                  } dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}
-                  fill='currentColor'
-                  viewBox='0 0 20 20'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
-                    clipRule='evenodd'
-                  ></path>
-                </svg>
                 <span
-                  className={`py-1 ${
-                    activeLink === '/admin/dashboard/materi'
-                      ? 'text-white ml-3'
-                      : 'ml-3'
+                  className={`py-1 flex items-center ml-4 gap-2 ${
+                    activeLink === '/admin/dashboard/materi' ? 'text-white' : ''
                   }`}
                 >
+                  <RiPresentationLine />
                   Materi
                 </span>
               </Link>

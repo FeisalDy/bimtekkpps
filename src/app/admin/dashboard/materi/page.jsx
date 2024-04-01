@@ -14,8 +14,8 @@ export default function Page () {
   const { mutate } = useSWRConfig()
   const { data: session } = useSession()
   const [status, setStatus] = useState(0)
-
-  const { materi, materiLoading, isError } = useMateri()
+  const [activeButton, setActiveButton] = useState('materi')
+  const { materi, materiLoading, isError } = useMateri(activeButton)
   const [showModal, setShowModal] = useState(false)
   const [state, setState] = useState({
     title: '',
@@ -102,6 +102,29 @@ export default function Page () {
           showModal ? 'blur-lg' : ''
         }`}
       >
+        <div className='flex gap-2 my-4'>
+          <button
+            className={`flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 ${
+              activeButton === 'materi'
+                ? 'bg-blue-700 text-white'
+                : 'bg-slate-200'
+            }`}
+            onClick={() => setActiveButton('materi')}
+          >
+            Materi
+          </button>
+          <button
+            className={`flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 ${
+              activeButton === 'modul'
+                ? 'bg-blue-700 text-white'
+                : 'bg-slate-200'
+            }`}
+            onClick={() => setActiveButton('modul')}
+          >
+            Modul
+          </button>
+        </div>
+
         {materi && !materiLoading && (
           <ItemsTableContainer
             materi={materi}
@@ -112,6 +135,7 @@ export default function Page () {
             isEdit={handleEditItem}
             clearState={clearState}
             session={session}
+            activeButton={activeButton}
           />
         )}
         {materiLoading && <LoadingTable />}

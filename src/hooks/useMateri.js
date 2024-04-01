@@ -5,8 +5,8 @@ import Axios from '@/src/utils/axios'
 
 const fetcher = url => Axios.get(url).then(res => res.data)
 
-export function useMateri () {
-  const { data, error, isLoading } = useSWR('pptx', fetcher)
+export function useMateri (type) {
+  const { data, error, isLoading } = useSWR(`pptx?type=${type}`, fetcher)
 
   return {
     materi: data,

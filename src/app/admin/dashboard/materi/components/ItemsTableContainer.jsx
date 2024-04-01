@@ -13,7 +13,8 @@ export const ItemsTableContainer = ({
   isEdit,
   clearState,
   mutate,
-  session
+  session,
+  activeButton
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
@@ -56,6 +57,9 @@ export const ItemsTableContainer = ({
             mutate={mutate}
             isEdit={isEdit}
             session={session}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            activeButton={activeButton}
           />
         </div>
       </div>
