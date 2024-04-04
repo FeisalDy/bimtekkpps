@@ -30,8 +30,8 @@ export const ItemsTable = ({
                 }
               })
               if (res.status === 200) {
-                mutate('pptx?type=materi')
-                mutate('pptx?type=modal')
+                mutate(`pptx?type=materi`)
+                mutate(`pptx?type=modul`)
                 toast.success('Item successfully deleted!', {
                   position: 'bottom-right',
                   autoClose: 2000,
@@ -103,7 +103,7 @@ export const ItemsTable = ({
         </tr>
       </thead>
       <tbody>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <tr
             key={`${item.id}`}
             className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'

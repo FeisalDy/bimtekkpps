@@ -1,10 +1,11 @@
+'use client'
 import Image from 'next/image'
 import { useEffect } from 'react'
 
 const DisplayImage = ({ state }) => {
   useEffect(() => {
     console.log(state)
-  }, [state])
+  }, [state.editImage])
 
   return (
     <>
@@ -15,6 +16,7 @@ const DisplayImage = ({ state }) => {
           width={200}
           height={200}
           className='object-cover object-center w-20 h-20 rounded-lg'
+          unoptimized={true}
         />
       )}
       {state.image.filePath && !state.editImage && (

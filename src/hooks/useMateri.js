@@ -6,7 +6,19 @@ import Axios from '@/src/utils/axios'
 const fetcher = url => Axios.get(url).then(res => res.data)
 
 export function useMateri (type) {
-  const { data, error, isLoading } = useSWR(`pptx?type=${type}`, fetcher)
+  const { data, error, isLoading } =
+    //   useSWR(`pptx?type=${type}`, fetcher)
+    useSWR(`pptx?type=${type}`, async () => {
+      try {
+        return await fetcher(`pptx?type=${type}`)
+      } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 404) {
+          return null
+        } else {
+          throw error
+        }
+      }
+    })
 
   return {
     materi: data,

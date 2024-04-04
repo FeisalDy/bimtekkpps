@@ -3,10 +3,11 @@ import connect from '@/src/utils/db'
 import { NextResponse } from 'next/server'
 
 export const GET = async req => {
+  const url = new URL(req.url) || ''
+  const type = url.searchParams.get('type') || ''
+
   try {
     await connect()
-    const url = new URL(req.url) || ''
-    const type = url.searchParams.get('type') || ''
 
     if (type === 'materi') {
       const pptx = await Pptx.find({
@@ -30,7 +31,12 @@ export const GET = async req => {
       return new Response(JSON.stringify(pptx), { status: 200 })
     } else {
       const pptx = await Pptx.find({})
-      return new Response(JSON.stringify(pptx), { status: 200 })
+      //   return new Response(JSON.stringify(pptx), { status: 200 })
+      return NextResponse.json({
+        data: pptx,
+        status: 200,
+        url: url
+      })
     }
   } catch (error) {
     return NextResponse.json({

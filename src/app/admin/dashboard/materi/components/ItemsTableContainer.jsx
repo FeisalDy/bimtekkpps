@@ -25,7 +25,7 @@ export const ItemsTableContainer = ({
   let pageSize = 10
   const startIndex = (currentPage - 1) * pageSize
   const endIndex = startIndex + pageSize
-  const totalPages = Math.ceil(materi.length / pageSize)
+  const totalPages = Math.ceil(materi?.length / pageSize)
   //const  currentData = materi.slice(startIndex, endIndex);
 
   //search filter
@@ -34,10 +34,10 @@ export const ItemsTableContainer = ({
     setCurrentPage(1)
   }
 
-  const filteredData = materi.filter(item =>
+  const filteredData = materi?.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
-  const currentData = filteredData.slice(startIndex, endIndex)
+  const currentData = filteredData?.slice(startIndex, endIndex)
 
   return (
     <div className='relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg'>
@@ -68,18 +68,7 @@ export const ItemsTableContainer = ({
         handleChangePage={handleChangePage}
         currentPage={currentPage}
       />
-      <ToastContainer
-        position='bottom-right'
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
+      
     </div>
   )
 }

@@ -1,40 +1,34 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Axios from '@/src/utils/axios'
+import { useMateri } from '@/src/hooks/useMateri'
 
 export default function Materi () {
+  const { materi, materiLoading, isError } = useMateri()
+
   const [pptx, setPptx] = useState([])
   const [pdf, setPdf] = useState([])
 
-  const getPptx = async () => {
-    try {
-      const res = await Axios.get('/pptx')
-      const allPptx = res.data
-
-      const pdfItems = allPptx.filter(
+  useEffect(() => {
+    if (materi && materi.data) {
+      const pdfItems = materi.data.filter(
         item => item.type === 'pdf' || item.type === 'application/pdf'
       )
-      const nonPdfItems = allPptx.filter(
+
+      const pptxItems = materi.data.filter(
         item =>
           item.type === 'pptx' ||
           item.type ===
             'application/vnd.openxmlformats-officedocument.presentationml.presentation'
       )
 
-      nonPdfItems.sort((a, b) => a.title.localeCompare(b.title))
+      pptxItems.sort((a, b) => a.title.localeCompare(b.title))
       pdfItems.sort((a, b) => a.title.localeCompare(b.title))
 
-      setPptx(nonPdfItems)
+      setPptx(pptxItems)
       setPdf(pdfItems)
-    } catch (error) {
-      console.error('Error fetching pptx data:', error)
     }
-  }
-
-  useEffect(() => {
-    getPptx()
-  }, [])
+  }, [materi])
 
   return (
     <section className='w-full px-5 mt-2 sm:px-10 md:px-24 sxl:px-32'>

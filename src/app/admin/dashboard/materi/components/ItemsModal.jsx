@@ -1,5 +1,6 @@
 import { useDropzone } from 'react-dropzone'
 import { createMateri, updateMateri } from '@/src/lib/materi'
+import { useCallback } from 'react'
 
 export const ItemsModal = ({
   showModal,
@@ -11,29 +12,34 @@ export const ItemsModal = ({
   handleStatus,
   mutate
 }) => {
+  //   const handleFileCallback = useCallback(
+  //     acceptedFile => {
+  //       handleFile(acceptedFile)
+  //     },
+  //     [handleFile]
+  //   )
+
   const { getRootProps, getInputProps } = useDropzone({
-    accept:
-      'application/pdf, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.ms-excel',
+    // accept:
+    //   'application/pdf, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.ms-excel',
     onDrop: acceptedFiles => {
       handleFile(acceptedFiles[0])
     }
+    // onDrop: handleFileCallback
   })
 
   const handleSubmission = async e => {
     setState(prev => ({ ...prev, loading: true }))
-
     try {
       e.preventDefault()
       const formData = new FormData()
       formData.append('title', state.title)
       formData.append('file', state.file)
       formData.append('accessToken', session?.accessToken)
-
       const res = await createMateri(formData)
-
       if (res.status === 201) {
-        mutate('pptx?type=materi')
-        mutate('pptx?type=modal')
+        mutate(`pptx?type=materi`)
+        mutate(`pptx?type=modul`)
         handleStatus(200)
       } else {
         handleStatus(500)
@@ -48,19 +54,16 @@ export const ItemsModal = ({
 
   const handleEdit = async (e, state) => {
     setState(prev => ({ ...prev, loading: true }))
-
     try {
       e.preventDefault()
       const formData = new FormData()
       formData.append('title', state.title)
       formData.append('file', state.file)
       formData.append('accessToken', session?.accessToken)
-
       const res = await updateMateri(state, formData)
-
       if (res.status === 200) {
-        mutate('pptx?type=materi')
-        mutate('pptx?type=modal')
+        mutate(`pptx?type=materi`)
+        mutate(`pptx?type=modul`)
         handleStatus(200)
       } else {
         handleStatus(500)

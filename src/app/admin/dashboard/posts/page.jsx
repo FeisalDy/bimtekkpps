@@ -8,6 +8,7 @@ import { getFormattedDate } from '@/src/utils/getDate'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function Page () {
   const [showModal, setShowModal] = useState(false)
@@ -107,6 +108,17 @@ export default function Page () {
         progress: undefined,
         theme: 'light'
       })
+    } else if (status === 501) {
+      toast.error('Action failed!. Please upload image.', {
+        position: 'bottom-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      })
     }
     setTimeout(() => {
       setStatus(0)
@@ -140,6 +152,19 @@ export default function Page () {
         setState={setState}
         imageChanged={handleImage}
         handleStatus={handleStatus}
+      />
+      <ToastContainer
+        position='bottom-right'
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+        style={{ zIndex: 50 }}
       />
     </section>
   )

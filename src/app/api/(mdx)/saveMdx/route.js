@@ -16,7 +16,16 @@ export const POST = async (req, res) => {
     const folderPath = path.posix.join(process.cwd(), 'content', folderName)
 
     await mkdir(folderPath, { recursive: true })
-    await writeFile(path.join(folderPath, 'index.mdx'), mdxContent)
+    const success = await writeFile(
+      path.join(folderPath, 'index.mdx'),
+      mdxContent
+    )
+
+    if (success) {
+      // Assuming success variable indicates successful creation
+      // Send a WebSocket message or broadcast an event to invalidate cache
+      //   setCacheInvalidationFlag()
+    }
 
     return NextResponse.json({
       Message: 'Success',

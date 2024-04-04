@@ -13,7 +13,7 @@ export const ItemsModal = ({
   return (
     showModal && (
       <div
-        className={`fixed top-0 my-16 left-0 right-0 flex  items-center justify-center mx-auto  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(85%-1rem)] max-h-full`}
+        className={`fixed top-0 my-16 left-0 right-0 flex items-center justify-center mx-auto w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(85%-1rem)] max-h-full`}
       >
         <div
           className={`${

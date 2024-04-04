@@ -36,7 +36,6 @@ async function imageUploadHandler (image) {
 
 const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
   const ref = useRef(null)
-  const [mdx, setMdx] = useState('')
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -65,6 +64,8 @@ const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
 
       const json = await response.json()
       imageChanged(`../../public${json.imagePath}`)
+
+      setImage(`../../public${json.imagePath}`)
 
       console.log('Image uploaded:', json.imagePath)
     } catch (error) {
@@ -144,7 +145,7 @@ const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
         </div>
 
         <div className='mb-4'>
-          <DisplayImage state={state} />
+          {/* <DisplayImage state={state} /> */}
           <div className='mb-4'>
             <label
               htmlFor='dropzone'
@@ -260,10 +261,14 @@ const Editor = ({ state, setState, imageChanged, onClose, handleStatus }) => {
             type='button'
             className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
             onClick={() => {
-              setMdx(convertStateToMDX(state))
-              state.type === 'edit'
-                ? editToFolder(state.oldTitle, state)
-                : saveToFolder(state.title, convertStateToMDX(state))
+              if (state.editImage === '') {
+                handleStatus(501)
+                return
+              } else {
+                state.type === 'edit'
+                  ? editToFolder(state.oldTitle, state)
+                  : saveToFolder(state.title, convertStateToMDX(state))
+              }
             }}
           >
             Save

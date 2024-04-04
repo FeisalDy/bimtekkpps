@@ -9,6 +9,7 @@ import { useSWRConfig } from 'swr'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function Page () {
   const { mutate } = useSWRConfig()
@@ -149,6 +150,19 @@ export default function Page () {
         session={session}
         handleStatus={handleStatus}
         mutate={mutate}
+      />
+      <ToastContainer
+        position='bottom-right'
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+        style={{ zIndex: 50 }}
       />
     </section>
   )

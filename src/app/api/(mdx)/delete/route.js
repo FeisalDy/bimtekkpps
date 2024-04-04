@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { rmdir } from 'fs/promises'
 import path from 'path'
+import { revalidatePath } from 'next/cache'
 
 export const DELETE = async (req, res) => {
   const formData = await req.formData()
@@ -9,7 +10,7 @@ export const DELETE = async (req, res) => {
   try {
     const folderPath = path.join(process.cwd(), 'content', folderName)
 
-    await rmdir(folderPath, { recursive: true })
+    const success = await rmdir(folderPath, { recursive: true })
 
     return NextResponse.json({
       message: 'Success',
