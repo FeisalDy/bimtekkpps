@@ -72,7 +72,6 @@ const handler = NextAuth({
         }
 
         return Promise.resolve(true)
-        // return Promise.resolve(account.accessToken)
       } catch (error) {
         console.log(error)
         return false
