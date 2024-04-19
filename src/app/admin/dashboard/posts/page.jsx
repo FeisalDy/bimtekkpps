@@ -10,6 +10,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import { ToastContainer } from 'react-toastify'
 
+// export const revalidate = 5
+
+// async function getBlogs () {
+//   //   const res = await fetch(`https://...`, { cache: 'no-store' })
+//   const projects = allBlogs
+
+//   return projects
+// }
+
 export default function Page () {
   const [showModal, setShowModal] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -28,6 +37,7 @@ export default function Page () {
     editImage: ''
   })
   const products = allBlogs
+  //   const products = getBlogs()
 
   const saveItemHandler = () => {
     setSaving(true)

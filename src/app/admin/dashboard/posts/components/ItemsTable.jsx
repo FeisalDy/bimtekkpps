@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import slugify from 'slugify' // Import slugify library
 
+// export const revalidate = 5
+
 export const ItemsTable = ({
   items,
   onOpen,

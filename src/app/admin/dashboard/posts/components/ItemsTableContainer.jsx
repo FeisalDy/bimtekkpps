@@ -5,6 +5,8 @@ import { TableActions } from './TableAction'
 import { ItemsTable } from './ItemsTable'
 import { TableFooter } from './TableFooter'
 
+// export const revalidate = 5
+
 export const ItemsTableContainer = ({
   products,
   onOpen,
@@ -62,7 +64,6 @@ export const ItemsTableContainer = ({
         handleChangePage={handleChangePage}
         currentPage={currentPage}
       />
-      
     </div>
   )
 }

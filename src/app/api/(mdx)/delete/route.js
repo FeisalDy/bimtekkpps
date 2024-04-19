@@ -12,11 +12,14 @@ export const DELETE = async (req, res) => {
 
     const success = await rmdir(folderPath, { recursive: true })
 
-    return NextResponse.json({
-      message: 'Success',
-      folderPath: folderPath,
-      status: 200
-    })
+    // revalidatePath('/')
+
+    // return NextResponse.json({
+    //   message: 'Success',
+    //   folderPath: folderPath,
+    //   status: 200
+    // })
+    return Response.json({ revalidated: true, now: Date.now(), status: 200 })
   } catch (error) {
     return NextResponse.json({
       error: 'Error deleting folder',
