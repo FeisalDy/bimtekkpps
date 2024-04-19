@@ -7,7 +7,8 @@ import { Readable } from 'stream'
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
-const GOOGLE_REDIRECT_URI = ['http://localhost:3000/oauth2callback']
+// const GOOGLE_REDIRECT_URI = ['http://localhost:3000/oauth2callback']
+const GOOGLE_REDIRECT_URI = [process.env.GOOGLE_REDIRECT_URI]
 
 export const POST = async req => {
   const session = await getServerSession()
