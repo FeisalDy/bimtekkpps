@@ -1,0 +1,13 @@
+/(about)/about
+/(about)/contact
+
+/(user)/aturan
+/(user)/blogs/[slug]
+/(user)/categories/[slug]
+/(user)/materi
+/(user)/materi/[title]
+/(user)
+
+/admin/dashboard/materi
+/admin/dashboard/materi/upload
+/admin/dashboard/posts

@@ -54,20 +54,60 @@ export const POST = async req => {
     ) {
       const uniqueFileId = uploadResponse.data.id
       const permission = {
+        type: 'anyone',
         role: 'reader',
-        type: 'anyone'
+        // view: 'published',
+        allowFileDiscovery: true
       }
       await drive.permissions.create({
         fileId: uniqueFileId,
         requestBody: permission
       })
+      //   open_url = `https://docs.google.com/presentation/d/${uniqueFileId}/edit?usp=drive_web&ouid=109412687327996969464&rtpof=true`
+      url = `https://docs.google.com/presentation/d/${uniqueFileId}/embed?start=false&loop=false&delayms=3000`
+      //   const webViewLink = `https://drive.google.com/file/d/${uniqueFileId}/view`
+      //   const revisionId = uploadResponse.data.headRevisionId
 
-      const webViewLink = `https://drive.google.com/file/d/${uniqueFileId}/view`
-      const revisionId = uploadResponse.data.headRevisionId
-      console.log('revisionId: ', revisionId)
+      const isAccessible = await fetch(
+        `https://docs.google.com/presentation/d/${uniqueFileId}/edit?usp=drive_web&ouid=109412687327996969464&rtpof=true'
+      `
+      )
+        .then(response => {
+          if (response.ok) {
+            // If the response is ok (status in the range 200-299), the URL is accessible
+            return true
+          } else {
+            // If the response is not ok, the URL is not accessible
+            return false
+          }
+        })
+        .catch(error => {
+          // If there's an error (network issue, etc.), the URL is not accessible
+          console.error('Error accessing the URL:', error)
+          return false
+        })
 
-      url = `https://docs.google.com/presentation/d/${uniqueFileId}/embed?start=true&loop=true&delayms=5000&rm=minimal`
+      if (isAccessible) {
+        // URL is accessible, proceed with assigning the value to url
+        console.log('URL is accessible:', open_url)
+        // Additional code to handle the accessible URL can go here
+        // e.g., displaying the URL to the user or proceeding with other logic
+      } else {
+        // URL is not accessible
+        console.error('URL is not accessible:', open_url)
+        // Additional code to handle the inaccessible URL can go here
+        // e.g., notifying the user or taking alternative action
+      }
     }
+
+    // let url = `https://drive.google.com/file/d/${uploadResponse.data.id}/preview`
+    // let type = file.type
+    // if (
+    //   type ===
+    //   'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    // ) {
+    //   url = `https://docs.google.com/presentation/d/${uploadResponse.data.id}/embed?start=false&loop=false&delayms=3000`
+    // }
 
     const newPptx = new Pptx({
       title: title,
