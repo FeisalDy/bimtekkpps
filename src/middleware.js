@@ -21,6 +21,6 @@ export const config = {
     '/admin/:path*',
     '/admin/dashboard/posts',
     '/admin/dashboard/materi',
-    'admin/dashboard/materi/upload'
+    '/admin/dashboard/materi/upload'
   ]
 }
